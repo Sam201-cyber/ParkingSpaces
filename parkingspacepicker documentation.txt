@@ -1,0 +1,42 @@
+img = cv2.imread('carParkImg.png')
+ is used to load the picture i.e our jpg image of parking lot.
+
+width , height = 105, 48
+it basically decide  how big each parking spot box should be 
+
+
+def mouseClick(events, x, y, flags, params):
+ this is the mouse click function , if u click right it will add a parking spot of the size u set to it and on right click to it  , it will drop that spot.
+
+and to not loose previous spots that we spoted we used here  try and except ; 
+
+try:
+    with open('CarParkPos', 'rb') as f:
+        posList = pickle.load(f)
+except:
+    posList = []
+
+
+
+
+
+the while:True is used to show the image again and again showing the images and boxes. 
+
+
+and to show he parking boxes :
+
+ for pos in posList:
+    cv2.rectangle(img, pos,(pos[0]+width,pos[1]+height), (255, 0, 255), 2)
+
+
+cv2.imshow("Image",img)
+ to show the image
+
+cv2.setMouseCallback("Image",mouseClick)
+this is here to tell the program to run the mouse click fn when u click 
+
+
+and at the end    cv2.wait(1)
+TO GIVE A TINY PAUSE SO UR COMPUTER  CAN KEEP UPDATING IMAGES
+
+

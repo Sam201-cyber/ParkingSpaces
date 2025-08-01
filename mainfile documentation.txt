@@ -1,0 +1,58 @@
+Here in the main file we firstly imported the cv2 to look up at images and videos , pickle to load the parking slot positions  , cvzone to draw texts for parking slots in the video/image and numpy  for maths and arrays.
+
+
+cap = ......... is used to open the video if the parking lit i.e our mp4 video.
+
+
+
+with open('CarParkPos', 'rb') as f:
+    posList = pickle.load(f)
+this line is used to load the parking spot locations froma a file (f). 
+
+and we have given the height , width adn color of the rectangle around the parking spots/spaces.
+
+
+def checkParkingSpace is used to check each parking lot space in the video.
+
+
+for pos in polist , this for loop go through each parking spot and get its detection/position.
+
+
+to create the spot , we used   imgcrop=imgpro......      to cut out just the parking spot area from the image .
+   
+
+and trhe count function to spot white pixels in the area , more white means that more 
+things ( like a car in the spot.
+
+
+if count < 900:
+    color = (0,255,0)  
+    spaceCounter += 1
+else:
+    color = (0,0,255) 
+
+this if and else statement is used if the number is less than 900 the spot goes green which means the space is empty means no car and if greater than 900 it means that there some car .
+
+
+in the main loop , it run again and again for each image in the video , we can also use these  for blurr , graycolor , median and dilate
+
+
+imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+imgBlur = cv2.GaussianBlur(imgGray, (3,3), 1)
+imgThreshold = cv2.adaptiveThreshold(imgBlur,255, ...)
+imgMedian = cv2.medianBlur(imgThreshold, 5)
+imgDilate = cv2.dilate(imgMedian, None, iterations=1)
+
+
+
+
+used this to check the empty/full spots on the cleaned image   :  checkParkingSpace(imgDilate)
+
+
+and at the end we used : cv2.imshow("Image", img)
+   and cv2.waitKey(10)
+to show the image with colored boxes around each parking spot  and lead the frame to a small delay of (10) before going to next image.
+
+
+
+
