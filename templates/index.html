@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parking Occupancy Monitor</title>
+</head>
+<body>
+    <h1>Live Parking Metadata</h1>
+    <pre id="status">Waiting for data...</pre>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8000/ws");
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            document.getElementById("status").innerText = `
+Frame: ${data.frame}
+Time: ${data.timestamp}
+Occupied: ${data.occupied}
+Vacant: ${data.vacant}
+Total Spots: ${data.total_spots}
+            `;
+        };
+
+        ws.onclose = function() {
+            document.getElementById("status").innerText = "WebSocket disconnected";
+        };
+    </script>
+</body>
+</html>
